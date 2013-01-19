@@ -110,7 +110,7 @@ private:
                 s = strip(s);
                 debug { writefln("From %s: %s", cli.remoteAddress().toAddrString(), s); }
 
-                if(s == GameServerCommands.EXIT || s == "\n") {
+                if(s == GameServerCommands.EXIT) {
                     cli.send(GameServerCommands.EXIT);
                     debug {writefln("Exiting");}
                     break;
@@ -121,6 +121,9 @@ private:
                         writefln("b");
                         Player newP = Player.deserialize(s);
                         writefln("a");
+                        Player old = players[index];
+                        b.board[old.x][old.y].actor = null;
+                        b.board[newP.x][newP.y].actor = newP;
                         players[index] = newP;
                         cli.send(b.serialize());
                         auto json = JSONValue();
@@ -138,6 +141,7 @@ private:
                                 debug{ writefln("Player is null");}
                             }
                         }
+                        debug{writefln(s);}
                         debug{ writefln("Done serializing"); }
                         writefln(toJSON(&json));
                         cli.send(toJSON(&json));
@@ -146,12 +150,32 @@ private:
                     }
                 }
                 writefln("done");
+                drawBoard();
             }
             --currentUsers;
             writef("Closed connection to ");
             writefln(cli.remoteAddress().toAddrString());
             writefln("Current Users: %d", currentUsers);
             scope(exit) cli.close();
+        }
+    }
+
+    void drawBoard() {
+        for(int i = 0; i < b.board.length; ++i) {
+            for(int n = 0; n < b.board[i].length; ++n) {
+                char pChar = b.board[i][n].rep();
+                for(int z = 0; z < players.length; ++z) {
+                    if(!(players[z] is null)) {
+                        if(players[z].x == i && players[z].y==n) {
+                            //debug{writefln("Player at %d, %d", i,n);}
+                            pChar = players[z].rep;
+                            break;
+                        }
+                    }
+                }
+                writef("%c", pChar);
+            }
+            writefln("");
         }
     }
 

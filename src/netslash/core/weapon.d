@@ -25,5 +25,5 @@ abstract class Weapon : Item
 			return twoHanded;
 		}
 
-		const char getCharacter();
+		const char getCharacter() {return '/';}
 }

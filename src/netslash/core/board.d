@@ -52,6 +52,30 @@ class Board {
 		return toJSON(&b);
 	}
 
+	static Board deserialize(string src) {
+		Board b = new Board();
+		JSONValue json = src.parseJSON();
+		debug {
+			if(JSONValue* rows = "rows" in json.object) {
+				assert(rows.type == JSON_TYPE.UINTEGER && rows.uinteger == MAX_ROWS);
+			} else {
+				assert(0);
+			}
+			if(JSONValue* cols = "cols" in json.object) {
+				assert(cols.type == JSON_TYPE.UINTEGER && cols.uinteger == MAX_COLS);
+			} else {
+				assert(0);
+			}
+		}
+		JSONValue* data = "board" in json.object;
+		foreach(r;0 .. MAX_ROWS) {
+			foreach(c;0 .. MAX_COLS) {
+				
+			}
+		}
+		return b;
+	}
+
 	void print(File f) {
 		f.writefln(print());
 	}

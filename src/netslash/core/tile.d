@@ -1,5 +1,7 @@
 module netslash.core.tile;
 
+import std.typetuple;
+
 import netslash.core.actor;
 
 /*
@@ -13,8 +15,12 @@ class Tile {
 	{
 		return true;
 	}
+	static char rep() @property @safe nothrow pure
+	{
+		return (new typeof(this)()).rep;
+	}
 	// How does it look on the map
-	char rep() @property @safe nothrow const
+	char rep() @property @safe nothrow pure const
 	{
 		return ' ';
 	}

@@ -84,7 +84,7 @@ private:
         Socket cli;
         int bufsize;
         void run(){
-            cli.setOption(SocketOptionLevel.SOCKET, SocketOption.RCVLOWAT, 1);
+            //cli.setOption(SocketOptionLevel.SOCKET, SocketOption.RCVLOWAT, 1);
             ++currentUsers;
             debug { writefln("Running thread..."); }
             char[] buf = new char[bufsize];

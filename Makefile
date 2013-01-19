@@ -50,8 +50,9 @@ release-client: $(CLIENT_FILES)
 release-server: $(SERVER_FILES)
 	$(DBLD) -od"$(RELDIR)" $(RELEASE_FLAGS) $(SERVER_FILES)
 
-release-generator: $(SERVER_FILES)
+release-generator: $(GEN_FILES)
 	$(DBLD) -od"$(RELDIR)" $(RELEASE_FLAGS) $(GEN_FILES)
+
 clean:
 	rm -rf $(OBJDIR) $(RELDIR) &> /dev/null
 

@@ -15,7 +15,7 @@ abstract class Actor
 		int x,y;
 
 		// what character should be displayed for this actor
-		const char representation;
+		const char rep() @property {return ' ';}
 
 		// what help information should be displayed about this actor
 		const string help;

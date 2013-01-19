@@ -15,10 +15,12 @@ class Tile {
 	{
 		return true;
 	}
+	/*
 	static char rep() @property @safe nothrow pure
 	{
 		return (new typeof(this)()).rep;
 	}
+	*/
 	// How does it look on the map
 	char rep() @property @safe nothrow pure const
 	{
@@ -29,7 +31,16 @@ class Tile {
 		return "  : An empty space";
 	}
 
-	Actor actor;
+	bool putActor(Actor a) {
+		if(this.actor is null) {
+			this.actor = a;
+			return true;
+		}
+		return false;
+	}
+private:
+
+	Actor actor = null;
 }
 
 class Wall : Tile {

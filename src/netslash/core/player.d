@@ -10,7 +10,7 @@ import netslash.core.actor;
 import netslash.core.armor;
 import netslash.core.item;
 import netslash.core.npc;
-import netslash.core.unarmed;
+import netslash.core.weapons.unarmed;
 import netslash.core.weapon;
 
 class Player : Actor

@@ -5,12 +5,13 @@ import netslash.core.item;
 /*
  * Abstract class for Armor
  */
-abstract class Armor : Item
+class Armor : Item
 {
 	public:
-		const uint damage_absorbed() @property { return 0;}
+		const uint DAMAGE;
 
-		const abstract string getName();
-		const abstract string getHelp();
-		const abstract uint weight();
+		this(string _name, string _help, uint weight, char rep= ' ', uint damage=0) {
+			super(_name, _help, weight, rep);
+			DAMAGE=damage;
+		}
 }

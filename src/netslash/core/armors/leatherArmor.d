@@ -2,6 +2,7 @@ module netslash.core.armors.leatherarmor;
 
 import netslash.core.armor;
 
+static if(0)
 class LeatherArmor : Armor
 {
 	const override uint damage_absorbed() @property {return 2;}

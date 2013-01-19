@@ -7,28 +7,24 @@ class Unarmed : Weapon
 	private:
 	public:
 
-	/**
-	 * Create a new unarmed weapon.
-	 * Unarmed always does +0 damage
-	 **/
-	public this()
-	{
-		BASE_DAMAGE = 0;
+	override const int BASE_DAMAGE() @property {
+		return 0;
 	}
 
 	public:
-		override getCharacter()
+		char getCharacter()
 		{
 			return ' ';
 		}
 
-		override getName()
+		string getName()
 		{
 			return "Fisticuffs";
 		}
 
-		override getHelp()
+		string getHelp()
 		{
 			return "Attack with your manly fisticuffs!";
 		}
+		uint WEIGHT() @property { return 0; }
 }

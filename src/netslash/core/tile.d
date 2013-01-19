@@ -33,12 +33,12 @@ class Wall : Tile {
 		return false;
 	}
 	// How does it look on the map
-	char rep() @property @safe nothrow const
+	override char rep() @property @safe nothrow const
 	{
 		return '#';
 	}
 	// What is displayed when help command is used
-	string help() @property @safe nothrow const {
+	override string help() @property @safe nothrow const {
 		return "# : A wall";
 	}
 }

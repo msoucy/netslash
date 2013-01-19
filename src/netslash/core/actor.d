@@ -27,7 +27,7 @@ abstract class Actor
 
 	public:
 		// Move in the specified direction
-		void move( DIRECTION );
+		abstract void move( DIRECTION );
 
 		// Move to the specified location on the board
 		void teleport( int x, int y );

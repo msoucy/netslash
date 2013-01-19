@@ -29,7 +29,7 @@ class Board {
 				appr.put(tile.rep);
 			}
 		}
-		b.object["board"].str;
-		return b.toJSON();
+		b.object["board"].str = appr.data.idup;
+		return toJSON(&b);
 	}
 }

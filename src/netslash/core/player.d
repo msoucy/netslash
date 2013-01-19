@@ -3,10 +3,11 @@ module netslash.core.player;
 import std.random;
 
 import netslash.core.actor;
+import netslash.core.armor;
 import netslash.core.item;
-import netslash.core.weapon;
-import netslash.core.unarmed;
 import netslash.core.npc;
+import netslash.core.unarmed;
+import netslash.core.weapon;
 
 class Player : Actor
 {
@@ -50,12 +51,12 @@ class Player : Actor
 		 * determine if an attack hit or not.
 		 *
 		 * Returns the ammount of damage delt to the other actor.
-		 * If no damage was delt, returns 0.
+		 * If no damage was dealt, returns 0.
 		 */
-		auto attack( Actor a )
+		auto attack( Actor a, Weapon w )
 		{
 			int damage = 0;
-			auto hit = calculateHitChance();
+			auto hit = calculateHitChance( w );
 			auto roll = uniform( 0, 100 );
 
 			if( roll >= hit )
@@ -79,12 +80,12 @@ class Player : Actor
 		int calculateDamage()
 		{
 			// if a hand is unarmed (null) create new unarmed
-			if( leftHandWeapon == null )
+			if( leftHandWeapon is null )
 			{
 				leftHandWeapon = new Unarmed();
 			}
 
-			if( rightHandWeapon == null )
+			if( rightHandWeapon is null )
 			{
 				rightHandWeapon == new Unarmed();
 			}
@@ -122,7 +123,7 @@ class Player : Actor
 		/**
 		 * Applies the specified damage
 		 **/
-		void applyDamage( ulong damage )
+		override void applyDamage( ulong damage )
 		{
 			health -= damage - currentArmor.DAMAGE_ABSORBED;
 

@@ -8,5 +8,9 @@ import netslash.core.item;
 abstract class Armor : Item
 {
 	public:
-		const int DAMAGE_ABSORBED;
+		const uint damage_absorbed() @property { return 0;}
+
+		const abstract string getName();
+		const abstract string getHelp();
+		const abstract uint weight();
 }

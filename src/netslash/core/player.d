@@ -128,7 +128,7 @@ class Player : Actor
 		 **/
 		override void applyDamage( ulong damage )
 		{
-			health -= damage - currentArmor.DAMAGE_ABSORBED;
+			health -= damage - currentArmor.damage_absorbed;
 
 			if( health <= 0 )
 			{

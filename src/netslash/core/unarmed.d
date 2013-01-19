@@ -12,7 +12,7 @@ class Unarmed : Weapon
 	}
 
 	public:
-		char getCharacter()
+		override const char getCharacter()
 		{
 			return ' ';
 		}

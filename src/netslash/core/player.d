@@ -30,7 +30,9 @@ class Player : Actor
 		bool alive;
 
 	public:
-		char rep;
+		static char rep;
+		static real healthRegenFactor = 0.1;
+		static real manaRegenFactor = 0.1;
 	/**
 	 * Creates a new player
 	 * startHealth the starting health of the player

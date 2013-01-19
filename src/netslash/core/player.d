@@ -195,9 +195,18 @@ class Player : Actor
 			json.object["strength"] = JSONValue();
 			json.object["strength"].type = JSON_TYPE.INTEGER;
 			json.object["strength"].integer = strength;
+			json.object["dexterity"] = JSONValue();
+			json.object["dexterity"].type = JSON_TYPE.FLOAT;
+			json.object["dexterity"].floating = dexterity;
+			json.object["alive"] = JSONValue();
+			json.object["alive"].type = JSON_TYPE.INTEGER;
+			json.object["alive"].integer = alive;
 			json.object["rep"] = JSONValue();
 			json.object["rep"].type = JSON_TYPE.STRING;
 			json.object["rep"].str = ""~rep;
+			json.object["healthRegenFactor"] = JSONValue();
+			json.object["healthRegenFactor"].type = JSON_TYPE.FLOAT;
+			json.object["healthRegenFactor"].floating = healthRegenFactor;
 			return toJSON(&json);
 		}
 
@@ -214,6 +223,15 @@ class Player : Actor
 			p.maxMana = json.object["maxMana"].integer.to!int(),
 			p.x = json.object["x"].integer;
 			p.y = json.object["y"].integer;
+
+			p.healthRegenFactor =
+			json.object["healthRegenFactor"].floating;
+			p.manaRegenFactor =
+			json.object["manaRegenFactor"].floating;
+
+			p.dexterity = json.object["dexterity"].floating;
+			p.alive = json.object["alive"].integer;
+
 			return p;
 		}
 }

@@ -132,4 +132,19 @@ class Player : Actor
 				alive = false;
 			}
 		}
+
+		void heal( ulong amount )
+		{
+			health += amount;
+
+			if( health > maxHealth )
+			{
+				health = maxHealth;
+			}
+		}
+
+		int getMaxHealth()
+		{
+			return maxHealth;
+		}
 }

@@ -18,8 +18,9 @@ SRC_PREFIX=src
 CLIENT_PREFIX=$(SRC_PREFIX)/netslash/client
 SERVER_PREFIX=$(SRC_PREFIX)/netslash/server
 CORE_PREFIX=$(SRC_PREFIX)/netslash/core
+DNCURSES_PREFIX=$(SRC_PREFIX)/metus/dncurses
 
-CORE_FILES=${wildcard $(CORE_PREFIX)/*.d}
+CORE_FILES=${wildcard $(CORE_PREFIX)/*.d} ${wildcard $(DNCURSES_PREFIX)/*.d}
 CLIENT_FILES=${wildcard $(CLIENT_PREFIX)/*.d} $(CORE_FILES)
 SERVER_FILES=${wildcard $(SERVER_PREFIX)/*.d} $(CORE_FILES)
 

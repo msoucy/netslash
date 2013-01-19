@@ -13,20 +13,36 @@ class GameServer {
     }
 
     void startServer(ushort port = Consts.DEFAULT_PORT, int bufsize = Consts.DEFAULT_BUFSIZE, int maxcons = Consts.DEFAULT_MAXCONNECTIONS) {
-        debug {
-            writefln("Starting server:\n\tArgs: Port: %d\n\tBuffer Size: %d\n\tMax Connections: %d", port, bufsize, maxcons);
-        }
-        auto srv = new TcpSocket;
-        srv.bind(new InternetAddress(port));
-        srv.listen(10);
-        debug { writefln("Entering loop"); }
-        for(Socket c = srv.accept(); c.isAlive(); c = srv.accept()) {
-            debug { writefln("Waiting for connection..."); };
-            auto t = new UserThread(c);
-            t.start();
+        try {
+            debug {
+                writefln("Starting server:\n\tArgs: Port: %d\n\tBuffer Size: %d\n\tMax Connections: %d", port, bufsize, maxcons);
+            }
+            currentUsers = 0;
+            auto srv = new TcpSocket;
+            srv.bind(new InternetAddress(port));
+            srv.listen(10);
+            debug { writefln("Entering loop"); }
+            for(Socket c = srv.accept(); c.isAlive(); c = srv.accept()) {
+                debug { writefln("Waiting for connection..."); };
+                if(currentUsers < maxcons) {
+                    auto t = new UserThread(c);
+                    t.start();
+                }
+                else {
+                    writefln("Max Users Connected!");
+                    debug {
+                        writefln("Current mex users reached: %d", currentUsers);
+                    }
+                }
+            }
+        } catch(std.socket.SocketOSException e) {
+            writefln("Error binding to Socket");
         }
     }
 private:
+        synchronized {
+            int currentUsers;
+        }
     class UserThread : Thread {
         
         this(Socket rem, int bufs = Consts.DEFAULT_BUFSIZE) {
@@ -40,6 +56,7 @@ private:
         Socket cli;
         int bufsize;
         void run(){
+            ++currentUsers;
             debug { writefln("Running thread..."); }
             char[] buf = new char[bufsize];
             long n;
@@ -54,8 +71,7 @@ private:
             while(cli.isAlive()) {
                 n = cli.receive(buf);
                 string s = to!string(buf[0..n]);
-                chomp(s, "\n\n");
-                chomp(s, "\r");
+                s = strip(s);
                 debug { writefln("%s", s); }
                 cli.send("Ok\n");
                 if(s == GameServerCommands.EXIT) {
@@ -67,6 +83,7 @@ private:
                 writefln(cli.remoteAddress().toAddrString());
             }
             cli.close();
+            --currentUsers;
         }
     }
 }
@@ -74,11 +91,12 @@ private:
 // Sent from client
 class GameServerCommands {
     const string EXIT = "exit";
+    const string UPDATE = "update";
 }
 
 // Sent from server
 class GameServerStatus {
-    //TODO Fill Out\
+    const string UPDATE = "update";
 }
 
 int main() {

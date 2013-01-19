@@ -1,3 +1,5 @@
+module netslash.generator.mapgen;
+
 import std.stdio;
 //import netslash.core.actor;
 import netslash.core.tile;

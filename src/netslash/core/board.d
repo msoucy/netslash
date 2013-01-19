@@ -9,14 +9,14 @@ import std.typetuple;
 import netslash.core.tile;
 
 class Board {
-	enum MAX_ROWS = 50;
-	enum MAX_COLS = 15;
-	Tile[MAX_ROWS][MAX_COLS] board;
+	enum MAX_ROWS = 15;
+	enum MAX_COLS = 50;
+	Tile[MAX_COLS][MAX_ROWS] board;
 	alias this = board;
 	int startRow, startCol;
 
 	this() {
-		this.board = new Tile[MAX_ROWS][MAX_COLS];
+		this.board = new Tile[MAX_COLS][MAX_ROWS];
 		for(int i = 0; i < board.length; ++i) {
 			for(int n = 0; n < board[i].length; ++n) {
 				if(i == 0 || n == 0 || i == board.length - 1 || n == board[i].length - 1) {
@@ -87,7 +87,7 @@ class Board {
 			c++;
 			if(c==MAX_COLS) {
 				c=0;
-
+				r++;
 			}
 		}
 		return b;
@@ -101,8 +101,8 @@ class Board {
 		debug {writefln("printing board"); }
 		string s = "";
 		debug {writefln("x: %d, y: %d", this.board.length, this.board[0].length);}
-		for(int i = 0; i < this.board.length; ++i) {
-			for(int n = 0; n < this.board[i].length; ++n) {
+		for(int i = 0; i < MAX_ROWS; ++i) {
+			for(int n = 0; n < MAX_COLS; ++n) {
 
 				s ~= board[i][n].rep();
 			}

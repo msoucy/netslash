@@ -15,7 +15,7 @@ class Board {
 	int startRow, startCol;
 
 	this() {
-		board = new Tile[MAX_ROWS][MAX_COLS];
+		this.board = new Tile[MAX_ROWS][MAX_COLS];
 		for(int i = 0; i < board.length; ++i) {
 			for(int n = 0; n < board[i].length; ++n) {
 				if(i == 0 || n == 0 || i == board.length - 1 || n == board[i].length - 1) {
@@ -24,11 +24,14 @@ class Board {
 				else {
 					board[i][n] = new Tile();
 				}
-				
+				debug{ writefln("Put tile at %d, %d", i, n);}
 				board[i][n].x = i;
 				board[i][n].y = n;
+				debug { write(board[i][n]); }
 			}
+			debug { writefln(""); }
 		}
+
 	}
 
 	string serialize() {
@@ -81,11 +84,15 @@ class Board {
 	}
 
 	string print() {
+		debug {writefln("printing board"); }
 		string s = "";
-		for(int i = 0; i < board.length; ++i) {
-			for(int n = 0; n < board[i].length; ++n) {
+		debug {writefln("x: %d, y: %d", this.board.length, this.board[0].length);}
+		for(int i = 0; i < this.board.length; ++i) {
+			for(int n = 0; n < this.board[i].length; ++n) {
+
 				s ~= board[i][n].rep();
 			}
+			//debug{writefln("Line %d: %s\n", i, s);}
 			s ~= '\n';
 		}
 		return s;

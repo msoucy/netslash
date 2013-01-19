@@ -24,4 +24,6 @@ abstract class Weapon : Item
 		{
 			return twoHanded;
 		}
+
+		char getCharacter();
 }

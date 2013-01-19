@@ -20,7 +20,7 @@ abstract class RangedWeapon : Weapon
 
 		override JSONValue serialize( string typeRep )
 		{
-			JSONValue json = super.serialize( typeRep )
+			JSONValue json = super.serialize( typeRep );
 
 			json.object["baseRangedDamage"] = JSONValue();
 			json.object["baseRangedDamage"].type = JSON_TYPE.INTEGER;

@@ -4,6 +4,7 @@ import std.json;
 import std.random;
 import std.conv;
 import std.typetuple;
+import std.stdio;
 
 import netslash.core.actor;
 import netslash.core.armor;
@@ -186,9 +187,13 @@ class Player : Actor
 			json.object["strength"] = JSONValue();
 			json.object["strength"].type = JSON_TYPE.INTEGER;
 			json.object["strength"].integer = strength;
+
+			
 			json.object["rep"] = JSONValue();
 			json.object["rep"].type = JSON_TYPE.STRING;
-			json.object["rep"].integer = rep;
+
+			json.object["rep"].str = ""~rep;
+			writefln("asd");
 			return toJSON(&json);
 		}
 

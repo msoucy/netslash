@@ -101,7 +101,9 @@ private:
                 s = strip(s);
                 debug { writefln("From %s: %s", cli.remoteAddress().toAddrString(), s); }
                 if(s == GameServerCommands.UPDATE) {
-                    cli.send(GameServerCommands.UPDATE);
+                    //TODO Update player info
+                    cli.send(b.serialize());
+                    //TODO send player positions
                 }
                 else if(s == GameServerCommands.EXIT || s == "\n") {
                     cli.send(GameServerCommands.EXIT);

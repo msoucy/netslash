@@ -20,10 +20,10 @@ abstract class Weapon : Item
 		bool twoHanded;
 
 	public:
-		bool getTwoHanded()
+		const bool getTwoHanded()
 		{
 			return twoHanded;
 		}
 
-		char getCharacter();
+		const char getCharacter();
 }

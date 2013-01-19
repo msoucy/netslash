@@ -144,7 +144,7 @@ private:
             writef("Closed connection to ");
             writefln(cli.remoteAddress().toAddrString());
             writefln("Current Users: %d", currentUsers);
-            cli.close();
+            scope(exit) cli.close();
         }
     }
 

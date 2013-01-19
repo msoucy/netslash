@@ -141,7 +141,7 @@ int main() {
     }
     debug {
         writefln("Commands: %s, %s, %s", GameServerCommands.UPDATE,GameServerCommands.EXIT, GameServerCommands.ERROR);
-        Tile n = new Tile();
+        Tile n = new Tile(0,0);
         n.rep();
     }
     GameServer gs = new GameServer();

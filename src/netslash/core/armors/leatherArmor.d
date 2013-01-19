@@ -1,24 +1,33 @@
 module netslash.core.armors.leatherarmor;
 
+import std.json;
+
 import netslash.core.armor;
 
-static if(0)
 class LeatherArmor : Armor
 {
-	const override uint damage_absorbed() @property {return 2;}
-
-	override const string getName()
+	public this()
 	{
-		return "Leather Armor";
+		super(
+			"LeatherArmor",
+			"A basic set of armor that provides minimal protection",
+			20,
+			'L',
+			1
+	);
 	}
 
-	override const string getHelp()
+	public string serialize()
 	{
-		return "A basic set of armor that provides minimal protection";
+		auto json = super.serialize( "LeatherArmor" );
+		return toJSON(&json);
 	}
 
-	override const uint weight()
+	public static LeatherArmor deserialize( string src )
 	{
-		return 20;
+		auto json = src.parseJSON();
+		LeatherArmor r = new LeatherArmor();
+
+		return r;
 	}
 }

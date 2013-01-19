@@ -38,7 +38,6 @@ class Tile {
 		}
 		return false;
 	}
-private:
 
 	Actor actor = null;
 }

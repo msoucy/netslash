@@ -79,7 +79,7 @@ private:
         Socket cli;
         int bufsize;
         void run(){
-            cli.setOption(SocketOptionLevel.SOCKET, SocketOption.RCVLOWAT, 5);
+            cli.setOption(SocketOptionLevel.SOCKET, SocketOption.RCVLOWAT, 1);
             ++currentUsers;
             debug { writefln("Running thread..."); }
             char[] buf = new char[bufsize];
@@ -91,7 +91,6 @@ private:
 
             string s = "";
             Player p = new Player(10,10,10,10, 'X');
-            b.putActor(p);
             bool err = b.board[b.startRow][b.startCol].putActor(p);
             debug {(err) ? writefln("Placed at home") : writefln("Error placing");}
             cli.send(b.serialize());
@@ -104,7 +103,7 @@ private:
                 if(s == GameServerCommands.UPDATE) {
                     cli.send(GameServerCommands.UPDATE);
                 }
-                else if(s == GameServerCommands.EXIT || '\n') {
+                else if(s == GameServerCommands.EXIT || s == "\n") {
                     cli.send(GameServerCommands.EXIT);
                     debug {writefln("Exiting");}
                     break;

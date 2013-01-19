@@ -66,11 +66,11 @@ private:
         Socket cli;
         int bufsize;
         void run(){
+            cli.setOption(SocketOptionLevel.SOCKET, SocketOption.RCVLOWAT, 1);
             ++currentUsers;
             debug { writefln("Running thread..."); }
             char[] buf = new char[bufsize];
             long n;
-            // n = cli.receive(buf);
             debug { 
                 write("Connection from ");
                 writefln(cli.remoteAddress().toAddrString());

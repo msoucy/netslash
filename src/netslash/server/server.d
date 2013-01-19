@@ -18,7 +18,7 @@ import netslash.core.player;
 class GameServer {
 
     enum Consts {
-        DEFAULT_PORT = 13373,
+        DEFAULT_PORT = 13374,
         DEFAULT_BUFSIZE = 1024,
         DEFAULT_MAXCONNECTIONS = 8
     }
@@ -120,7 +120,6 @@ private:
             writefln(cli.remoteAddress().toAddrString());
             writefln("Current Users: %d", currentUsers);
             cli.close();
-            
         }
     }
 
@@ -134,7 +133,7 @@ public:
     static string ERROR = "error";
 }
 
-int main() {
+int main(char[][] argv) {
     writefln("Starting Gameserver");
     debug {
         writefln("***Debug Enabled***");

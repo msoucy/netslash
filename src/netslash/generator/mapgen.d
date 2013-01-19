@@ -2,6 +2,8 @@ import std.stdio;
 //import netslash.core.actor;
 import netslash.core.tile;
 import netslash.core.board;
+import std.conv;
+import std.string;
 
 Board genTestMap() {
     Board b = new Board();
@@ -21,8 +23,9 @@ Board genTestMap() {
     }
     return b;
 }
-
 int main(char[][] argv) {
-    genTestMap().print(stdout);
+    writeln("Generating map...");
+    auto f = File("Maps/map.nsmap", "w");
+    genTestMap().print(f);
     return 1;
 }

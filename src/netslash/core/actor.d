@@ -19,8 +19,9 @@ abstract class Actor
 		const string help;
 
 		// the valid directions that the actor can move in
-		enum DIRECTON = {
-			NORTH, EAST, SOUTH, WEST };
+		enum DIRECTION {
+			NORTH, EAST, SOUTH, WEST
+		};
 
 	public:
 		// Move in the specified direction

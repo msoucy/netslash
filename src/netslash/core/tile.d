@@ -23,7 +23,15 @@ class Tile {
 		return "  : An empty space";
 	}
 
-	Actor actor;
+	bool putActor(Actor a) {
+		if(this.actor is null) {
+			this.actor = a;
+			return true;
+		}
+		return false;
+	}
+
+	Actor actor = null;
 }
 
 class Wall : Tile {

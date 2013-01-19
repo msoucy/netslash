@@ -8,6 +8,8 @@ import std.string;
 import std.json;
 import netslash.generator.mapgen : genTestMap;
 import netslash.core.board;
+import netslash.core.tile;
+import netslash.core.player;
 
 /**
 * GameServer for netslash
@@ -16,7 +18,7 @@ import netslash.core.board;
 class GameServer {
 
     enum Consts {
-        DEFAULT_PORT = 13374,
+        DEFAULT_PORT = 13373,
         DEFAULT_BUFSIZE = 1024,
         DEFAULT_MAXCONNECTIONS = 8
     }
@@ -32,7 +34,7 @@ class GameServer {
             debug {
                 writefln("Starting server\nArgs:\n\tPort: %d\n\tBuffer Size: %d\n\tMax Connections: %d", port, bufsize, maxcons);
             }
-            //b = genTestMap();
+            b = genTestMap();
             maxUsers = maxcons;
             currentUsers = 0;
             cons = new Socket[maxcons];
@@ -88,18 +90,20 @@ private:
             }
 
             string s = "";
-            cli.send(b.print());
-            writefln(b.print());
+            Player p = new Player(10,10,10,10, 'X');
+            bool err = b.board[b.startRow][b.startCol].putActor(p);
+            debug {(err) ? writefln("Placed at home") : writefln("Error placing");}
+            cli.send(b.serialize());
+            debug {writefln(b.print()); }
             while(cli.isAlive()) {
                 n = cli.receive(buf);
                 s = to!string(buf[0..n]);
                 s = strip(s);
-                
                 debug { writefln("From %s: %s", cli.remoteAddress().toAddrString(), s); }
                 if(s == GameServerCommands.UPDATE) {
                     cli.send(GameServerCommands.UPDATE);
                 }
-                else if(s == GameServerCommands.EXIT) {
+                else if(s == GameServerCommands.EXIT || s == "\n") {
                     cli.send(GameServerCommands.EXIT);
                     debug {writefln("Exiting");}
                     break;
@@ -128,12 +132,14 @@ public:
 }
 
 int main() {
-    debug {
-        writefln("%s, %s, %s", GameServerCommands.UPDATE,GameServerCommands.EXIT, GameServerCommands.ERROR);
-    }
     writefln("Starting Gameserver");
     debug {
         writefln("***Debug Enabled***");
+    }
+    debug {
+        writefln("Commands: %s, %s, %s", GameServerCommands.UPDATE,GameServerCommands.EXIT, GameServerCommands.ERROR);
+        Tile n = new Tile();
+        n.rep();
     }
     GameServer gs = new GameServer();
     gs.startServer();

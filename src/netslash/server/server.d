@@ -18,7 +18,7 @@ import netslash.core.player;
 class GameServer {
 
     enum Consts {
-        DEFAULT_PORT = 13374,
+        DEFAULT_PORT = 13373,
         DEFAULT_BUFSIZE = 1024,
         DEFAULT_MAXCONNECTIONS = 8
     }
@@ -109,34 +109,41 @@ private:
                 s = to!string(buf[0..n]);
                 s = strip(s);
                 debug { writefln("From %s: %s", cli.remoteAddress().toAddrString(), s); }
-                if(s.indexOf(GameServerCommands.UPDATE) > -1) {
-                    cli.send(b.serialize());
-                    auto json = JSONValue();
-                    json.type = JSON_TYPE.ARRAY;
-                    for(int i = 0; i < players.length; ++i) {
-                        if(!(players[i] is null)) {
-                            debug { writefln("Adding player: %d", i); }
-                            string str = players[i].serialize();
-                            debug { writefln("Serialized player: %s", str); }
-                            writef("a\n");
-                            json.array ~= parseJSON(str);
-                            debug{ writefln("Bottom of loop"); }
-                        }
-                        else {
-                            debug{ writefln("Player is null");}
-                        }
-                    }
-                    debug{ writefln("Done serializing"); }
-                    writefln(toJSON(&json));
-                    cli.send(toJSON(&json));
-                }
-                else if(s == GameServerCommands.EXIT || s == "\n") {
+
+                if(s == GameServerCommands.EXIT || s == "\n") {
                     cli.send(GameServerCommands.EXIT);
                     debug {writefln("Exiting");}
                     break;
                 }
+
                 else {
-                    cli.send(GameServerCommands.ERROR);
+                    try {
+                        writefln("b");
+                        Player newP = Player.deserialize(s);
+                        writefln("a");
+                        players[index] = newP;
+                        cli.send(b.serialize());
+                        auto json = JSONValue();
+                        json.type = JSON_TYPE.ARRAY;
+                        for(int i = 0; i < players.length; ++i) {
+                            if(!(players[i] is null)) {
+                                debug { writefln("Adding player: %d", i); }
+                                string str = players[i].serialize();
+                                debug { writefln("Serialized player: %s", str); }
+                                writef("a\n");
+                                json.array ~= parseJSON(str);
+                                debug{ writefln("Bottom of loop"); }
+                            }
+                            else {
+                                debug{ writefln("Player is null");}
+                            }
+                        }
+                        debug{ writefln("Done serializing"); }
+                        writefln(toJSON(&json));
+                        cli.send(toJSON(&json));
+                    } catch(Exception e) {
+                        cli.write("error");
+                    }
                 }
                 writefln("done");
             }

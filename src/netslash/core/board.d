@@ -36,11 +36,15 @@ class Board {
 	}
 
 	void print(File f) {
+		f.writefln(print());
+	}
+	string print() {
+		string s = "";
 		for(int i = 0; i < board.length; ++i) {
 			for(int n = 0; n < board[i].length; ++n) {
-				f.writef("%s", board[i][n].rep());
+				s+=board[i][n].rep();
 			}
-			f.writefln("");
+			s+='\n';
 		}
 	}
 }

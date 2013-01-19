@@ -40,7 +40,7 @@ class Player : Actor
 	 * startMaxWeight how much weight a player can carry
 	 */
 	public this( int startHealth, int startMana, int startMaxWeight, int
-	startStrength, char repChar)
+	startStrength, float startDex ,char repChar)
 	{
 		health = startHealth;
 		maxHealth = startHealth;
@@ -49,6 +49,7 @@ class Player : Actor
 		weight = 0;
 		maxWeight = startMaxWeight;
 		strength = startStrength;
+		dexterity = startDex;
 		rep = repChar;
 
 		inventory = [];
@@ -217,6 +218,7 @@ class Player : Actor
 				json.object["mana"].integer.to!int(),
 				json.object["maxWeight"].integer.to!int(),
 				json.object["strength"].integer.to!int(),
+				json.object["dexterity"].floating,
 				json.object["rep"].str.to!char(),
 			);
 			p.maxHealth = json.object["maxHealth"].integer.to!int(),

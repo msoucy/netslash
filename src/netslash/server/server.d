@@ -75,7 +75,7 @@ private:
             ++currentUsers;
             debug { writefln("Running thread..."); }
             char[] buf = new char[bufsize];
-            long n;
+            size_t n;
             debug { 
                 write("Connection from ");
                 writefln(cli.remoteAddress().toAddrString());

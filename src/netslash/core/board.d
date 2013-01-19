@@ -12,6 +12,7 @@ class Board {
 	enum MAX_COLS = 15;
 	Tile[MAX_ROWS][MAX_COLS] board;
 	alias this = board;
+	int startRow, startCol;
 
 	string serialize() {
 		JSONValue b;

@@ -12,7 +12,7 @@ abstract class Actor
 		const bool moveable() @property{ return true; };
 
 		// the Actor's position
-		int x,y;
+		long x,y;
 
 		// what character should be displayed for this actor
 		const char rep() @property {return ' ';}

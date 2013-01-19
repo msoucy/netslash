@@ -1,6 +1,9 @@
 module netslash.core.player;
 
+import std.json;
 import std.random;
+import std.conv;
+import std.typetuple;
 
 import netslash.core.actor;
 import netslash.core.armor;
@@ -160,5 +163,39 @@ class Player : Actor
 
 		override string help() {
 			return "A player";
+		}
+
+		string serialize() {
+			auto json = JSONValue();
+			json.type = JSON_TYPE.OBJECT;
+			json.object["x"].type = JSON_TYPE.INTEGER;
+			json.object["x"].integer = x;
+			json.object["y"].type = JSON_TYPE.INTEGER;
+			json.object["y"].integer = y;
+			json.object["health"].type = JSON_TYPE.INTEGER;
+			json.object["health"].integer = health;
+			json.object["mana"].type = JSON_TYPE.INTEGER;
+			json.object["mana"].integer = mana;
+			json.object["maxWeight"].type = JSON_TYPE.INTEGER;
+			json.object["maxWeight"].integer = maxWeight;
+			json.object["strength"].type = JSON_TYPE.INTEGER;
+			json.object["strength"].integer = strength;
+			json.object["rep"].type = JSON_TYPE.INTEGER;
+			json.object["rep"].integer = rep;
+			return toJSON(&json);
+		}
+
+		static Player deserialize(string src) {
+			auto json = src.parseJSON();
+			Player p = new Player(
+				json.object["health"].integer.to!int(),
+				json.object["mana"].integer.to!int(),
+				json.object["maxWeight"].integer.to!int(),
+				json.object["strength"].integer.to!int(),
+				json.object["rep"].str.to!char(),
+			);
+			p.x = json.object["x"].integer;
+			p.y = json.object["y"].integer;
+			return p;
 		}
 }

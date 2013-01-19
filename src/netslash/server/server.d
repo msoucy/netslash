@@ -94,6 +94,8 @@ private:
             bool err = b.board[b.startRow][b.startCol].putActor(p);
             debug {(err) ? writefln("Placed at home") : writefln("Error placing");}
             cli.send(b.serialize());
+            cli.send(p.serialize());
+            debug{ writefln("playerinfo: %s", p.serialize()); }
             debug {writefln(b.print()); }
             while(cli.isAlive()) {
                 n = cli.receive(buf);
@@ -101,7 +103,6 @@ private:
                 s = strip(s);
                 debug { writefln("From %s: %s", cli.remoteAddress().toAddrString(), s); }
                 if(s == GameServerCommands.UPDATE) {
-                    //TODO Update player info
                     cli.send(b.serialize());
                     //TODO send player positions
                 }

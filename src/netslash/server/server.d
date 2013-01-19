@@ -18,7 +18,7 @@ import netslash.core.player;
 class GameServer {
 
     enum Consts {
-        DEFAULT_PORT = 13374,
+        DEFAULT_PORT = 13373,
         DEFAULT_BUFSIZE = 1024,
         DEFAULT_MAXCONNECTIONS = 8
     }

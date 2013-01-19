@@ -6,7 +6,7 @@ RELDIR=rel
 
 C_LIBS=-lncurses
 D_LIBS=${addprefix -L, $(C_LIBS)}
-D_FLAGS=-property -od"$(OBJDIR)" $(D_LIBS)
+D_FLAGS=-property $(D_LIBS)
 DEBUG_FLAGS=$(D_FLAGS) -wi -de -gs -debug
 RELEASE_FLAGS=$(D_FLAGS) -O -inline 
 DBLD=dmd
@@ -23,17 +23,22 @@ $(OBJDIR)/%: %.d
 
 all: client server
 
-client:
-	$(DBLD) $(DEBUG_FLAGS) $(CLIENT_PREFIX)/client.d
+release: realclean release-client release-server
 
-server:
-	$(DBLD) $(DEBUG_FLAGS) $(SERVER_PREFIX)/server.d
+client: ${wildcard $(CLIENT_PREFIX)/*.d} ${wildcard $(CORE_PREFIX)/*.d}
+	$(DBLD) -od"$(OBJDIR)" $(DEBUG_FLAGS) $(CLIENT_PREFIX)/client.d
 
-release-client:
-	$(DBLD) $(RELEASE_FLAGS) $(CLIENT_PREFIX)/client.d
+server: ${wildcard $(SERVER_PREFIX)/*.d} ${wildcard $(CORE_PREFIX)/*.d}
+	$(DBLD) -od"$(OBJDIR)" $(DEBUG_FLAGS) $(SERVER_PREFIX)/server.d
 
-release-server:
-	$(DBLD) $(RELEASE_FLAGS) $(SERVER_PREFIX)/server.d
+release-client: ${wildcard $(CLIENT_PREFIX)/*.d} ${wildcard $(CORE_PREFIX)/*.d}
+	$(DBLD) -od"$(RELDIR)" $(RELEASE_FLAGS) $(CLIENT_PREFIX)/client.d
+
+release-server: ${wildcard $(SERVER_PREFIX)/*.d} ${wildcard $(CORE_PREFIX)/*.d}
+	$(DBLD) -od"$(RELDIR)" $(RELEASE_FLAGS) $(SERVER_PREFIX)/server.d
 
 clean:
-	rm -rf $(OBJDIR) &> /dev/null
+	rm -rf $(OBJDIR) $(RELDIR) &> /dev/null
+
+realclean: clean
+	rm -rf client server

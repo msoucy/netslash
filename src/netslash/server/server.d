@@ -129,5 +129,5 @@ int main() {
     }
     GameServer gs = new GameServer();
     gs.startServer();
-    return 1;
+    return 0;
 }

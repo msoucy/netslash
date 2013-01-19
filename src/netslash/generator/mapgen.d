@@ -45,5 +45,5 @@ int main(char[][] argv) {
     writeln("Generating map...");
     auto f = File("Maps/map.nsmap", "w");
     genTestMap().print(f);
-    return 1;
+    return 0;
 }

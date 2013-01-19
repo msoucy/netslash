@@ -28,10 +28,3 @@ Board genTestMap() {
 
     return b;
 }
-
-int main(char[][] argv) {
-    writeln("Generating map...");
-    auto f = File("Maps/map.nsmap", "w");
-    genTestMap().print(f);
-    return 0;
-}

@@ -1,5 +1,7 @@
 module netslash.core.rangedWeapon;
 
+import std.json;
+
 import netslash.core.weapon;
 
 abstract class RangedWeapon : Weapon
@@ -14,6 +16,17 @@ abstract class RangedWeapon : Weapon
 			);
 
 			BASE_RANGED_DAMAGE = baseRangedDamage;
+		}
+
+		override JSONValue serialize( string typeRep )
+		{
+			JSONValue json = super.serialize( typeRep )
+
+			json.object["baseRangedDamage"] = JSONValue();
+			json.object["baseRangedDamage"].type = JSON_TYPE.INTEGER;
+			json.object["baseRangedDamage"].integer = BASE_RANGED_DAMAGE;
+
+			return json;
 		}
 
 }

@@ -2,6 +2,7 @@ module netslash.core.board;
 
 import std.algorithm;
 import std.array;
+import std.conv;
 import std.json;
 import std.stdio;
 import std.typetuple;
@@ -20,10 +21,10 @@ class Board {
 		for(int i = 0; i < board.length; ++i) {
 			for(int n = 0; n < board[i].length; ++n) {
 				if(i == 0 || n == 0 || i == board.length - 1 || n == board[i].length - 1) {
-					board[i][n] = new Wall();
+					board[i][n] = new Wall(i, n);
 				}
 				else {
-					board[i][n] = new Tile();
+					board[i][n] = new Tile(i, n);
 				}
 				debug{ writefln("Put tile at %d, %d", i, n);}
 				board[i][n].x = i;
@@ -78,7 +79,7 @@ class Board {
 		size_t c = 0;
 		foreach(char ch; data.str) {
 			foreach(T; TypeTuple!(Tile, Wall, UpStairs, DownStairs)) {
-				Tile tile = new T();
+				Tile tile = new T(c.to!int(), r.to!int());
 				if(tile.rep == ch) {
 					b.board[r][c] = tile;
 					break;

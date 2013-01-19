@@ -8,6 +8,10 @@ import netslash.core.actor;
 class Tile {
 	// Records its position
 	int x,y;
+	this(int _x=0, int _y=0) {
+		x=_x;
+		y=_y;
+	}
 	// Can we pass through the tile?
 	bool passable() @property @safe nothrow const
 	{
@@ -35,6 +39,9 @@ class Tile {
 }
 
 class Wall : Tile {
+	this(int _x=0, int _y=0) {
+		super(_x, _y);
+	}
 	// Can we pass through the tile?
 	override bool passable() @property @safe nothrow const
 	{
@@ -52,6 +59,9 @@ class Wall : Tile {
 }
 
 class UpStairs : Tile {
+	this(int _x=0, int _y=0) {
+		super(_x, _y);
+	}
 	// Can we pass through the tile?
 	override bool passable() @property @safe nothrow const
 	{
@@ -69,6 +79,9 @@ class UpStairs : Tile {
 }
 
 class DownStairs : Tile {
+	this(int _x=0, int _y=0) {
+		super(_x, _y);
+	}
 	// Can we pass through the tile?
 	override bool passable() @property @safe nothrow const
 	{

@@ -30,7 +30,9 @@ class Player : Actor
 		bool alive;
 
 	public:
-		char rep;
+		static char rep;
+		static real healthRegenFactor = 0.1;
+		static real manaRegenFactor = 0.1;
 	/**
 	 * Creates a new player
 	 * startHealth the starting health of the player
@@ -44,7 +46,7 @@ class Player : Actor
 		maxHealth = startHealth;
 		mana = startMana;
 		maxMana = startMana;
-		weight = startMaxWeight;
+		weight = 0;
 		maxWeight = startMaxWeight;
 		strength = startStrength;
 		rep = repChar;
@@ -178,22 +180,24 @@ class Player : Actor
 			json.object["health"] = JSONValue();
 			json.object["health"].type = JSON_TYPE.INTEGER;
 			json.object["health"].integer = health;
+			json.object["maxHealth"] = JSONValue();
+			json.object["maxHealth"].type = JSON_TYPE.INTEGER;
+			json.object["maxHealth"].integer = maxHealth;
 			json.object["mana"] = JSONValue();
 			json.object["mana"].type = JSON_TYPE.INTEGER;
 			json.object["mana"].integer = mana;
+			json.object["maxMana"] = JSONValue();
+			json.object["maxMana"].type = JSON_TYPE.INTEGER;
+			json.object["maxMana"].integer = maxMana;
 			json.object["maxWeight"] = JSONValue();
 			json.object["maxWeight"].type = JSON_TYPE.INTEGER;
 			json.object["maxWeight"].integer = maxWeight;
 			json.object["strength"] = JSONValue();
 			json.object["strength"].type = JSON_TYPE.INTEGER;
 			json.object["strength"].integer = strength;
-
-			
 			json.object["rep"] = JSONValue();
 			json.object["rep"].type = JSON_TYPE.STRING;
-
 			json.object["rep"].str = ""~rep;
-			writefln("asd");
 			return toJSON(&json);
 		}
 
@@ -206,6 +210,8 @@ class Player : Actor
 				json.object["strength"].integer.to!int(),
 				json.object["rep"].str.to!char(),
 			);
+			p.maxHealth = json.object["maxHealth"].integer.to!int(),
+			p.maxMana = json.object["maxMana"].integer.to!int(),
 			p.x = json.object["x"].integer;
 			p.y = json.object["y"].integer;
 			return p;

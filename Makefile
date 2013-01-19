@@ -31,9 +31,9 @@ $(OBJDIR)/%: %.d
 	@if [ ! -d $(OBJDIR) ] ; then mkdir -p $(OBJDIR) ; fi
 	$(DBLD) "$<"
 
-all: client server generator
+all: client server
 
-release: realclean release-client release-server release-generator
+release: realclean release-client release-server
 
 client: $(CLIENT_FILES)
 	$(DBLD) -od"$(OBJDIR)" $(DEBUG_FLAGS) $(CLIENT_FILES)

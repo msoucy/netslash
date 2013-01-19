@@ -1,9 +1,10 @@
 module netslash.core.board;
 
-import std.json;
 import std.algorithm;
 import std.array;
+import std.json;
 import std.stdio;
+import std.typetuple;
 
 import netslash.core.tile;
 
@@ -57,20 +58,33 @@ class Board {
 		JSONValue json = src.parseJSON();
 		debug {
 			if(JSONValue* rows = "rows" in json.object) {
-				assert(rows.type == JSON_TYPE.UINTEGER && rows.uinteger == MAX_ROWS);
+				assert(rows.type == JSON_TYPE.INTEGER && rows.integer == MAX_ROWS);
 			} else {
 				assert(0);
 			}
 			if(JSONValue* cols = "cols" in json.object) {
-				assert(cols.type == JSON_TYPE.UINTEGER && cols.uinteger == MAX_COLS);
+				assert(cols.type == JSON_TYPE.INTEGER && cols.integer == MAX_COLS);
 			} else {
 				assert(0);
 			}
 		}
 		JSONValue* data = "board" in json.object;
-		foreach(r;0 .. MAX_ROWS) {
-			foreach(c;0 .. MAX_COLS) {
-				
+		assert(data.type == JSON_TYPE.STRING && data.str.length == MAX_ROWS*MAX_COLS);
+		
+		size_t r = 0;
+		size_t c = 0;
+		foreach(char ch; data.str) {
+			foreach(T; TypeTuple!(Tile, Wall, UpStairs, DownStairs)) {
+				Tile tile = new T();
+				if(tile.rep == ch) {
+					b.board[r][c] = tile;
+					break;
+				}
+			}
+			c++;
+			if(c==MAX_COLS) {
+				c=0;
+
 			}
 		}
 		return b;

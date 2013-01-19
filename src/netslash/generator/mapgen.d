@@ -7,7 +7,6 @@ import netslash.core.board;
 import std.conv;
 import std.string;
 import std.random;
-import netslash.core.stairs;
 
 Board genTestMap() {
     Board b = new Board();

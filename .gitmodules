@@ -1,0 +1,3 @@
+[submodule "src/metus/dncurses"]
+	path = src/metus/dncurses
+	url = git://github.com/msoucy/dncurses.git

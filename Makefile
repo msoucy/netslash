@@ -12,7 +12,7 @@ BASE_FLAGS=-property $(D_LIBS) -I"src"
 DEBUG_FLAGS=$(BASE_FLAGS) -wi -de -gs -debug
 RELEASE_FLAGS=$(BASE_FLAGS) -O -inline
 # The build command to use
-DBLD=dmd
+DBLD=rdmd --build-only
 
 SRC_PREFIX=src
 CLIENT_PREFIX=$(SRC_PREFIX)/netslash/client

@@ -7,4 +7,5 @@ interface Item
 
 		string getName();
 		string getHelp();
+		int getWeight();
 }

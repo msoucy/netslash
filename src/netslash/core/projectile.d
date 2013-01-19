@@ -1,10 +1,10 @@
 module netslash.core.projectile;
 
 import netslash.core.actor;
+import netslash.core.npc;
 
 
-//TODO add npc interface
-abstract class Projectile : Actor
+abstract class Projectile : Actor, Npc
 {
 	public:
 		const int SOURCE_DAMAGE;

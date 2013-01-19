@@ -6,12 +6,17 @@ import netslash.core.actor;
 import netslash.core.item;
 import netslash.core.weapon;
 import netslash.core.unarmed;
+import netslash.core.npc;
 
 class Player : Actor
 {
 	private:
 		Item[] inventory;
-		Actor[] slaves; //TODO change this to type npc later
+
+		// Actors that are 'spawned' by this player, they must go immediately
+		// after the player. The best example of this is a projectile from a
+		// ranged weapon
+		Npc[] slaves;
 		Weapon leftHandWeapon;
 		Weapon rightHandWeapon;
 		Armor currentArmor;
@@ -19,6 +24,12 @@ class Player : Actor
 		float dexterity;
 		bool alive;
 
+	/**
+	 * Creates a new player
+	 * startHealth the starting health of the player
+	 * startMana the starting mana of the player
+	 * startMaxWeight how much weight a player can carry
+	 */
 	public this( int startHealth, int startMana, int startMaxWeight, int
 	startStrength )
 	{
@@ -31,6 +42,7 @@ class Player : Actor
 		strength = startStrength;
 
 		inventory = [];
+		slaves = [];
 	}
 	private:
 		/*

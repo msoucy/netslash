@@ -29,6 +29,6 @@ class Unarmed : Weapon
 
 		override getHelp()
 		{
-			return "Attack with your manly fisticuffs!"
+			return "Attack with your manly fisticuffs!";
 		}
 }

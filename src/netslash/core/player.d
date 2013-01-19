@@ -150,4 +150,15 @@ class Player : Actor
 		{
 			return maxHealth;
 		}
+
+		override void teleport(int x, int y) {
+			return;
+		}
+		override void move(Actor.DIRECTION) {
+			return;
+		}
+
+		override string help() {
+			return "A player";
+		}
 }

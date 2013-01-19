@@ -1,5 +1,6 @@
 module netslash.core.weapon;
 
+import std.json;
 
 import netslash.core.item;
 import netslash.core.actor;
@@ -19,5 +20,25 @@ abstract class Weapon : Item
 			TWOHANDED=twohanded;
 			BASE_DAMAGE=baseDamage;
 			PRECISION=precision;
+		}
+
+		override JSONValue serialize ( string typeRep )
+		{
+			JSONValue json = super.serialize( typeRep );
+
+			json.object["twoHanded"] = JSONValue();
+			json.object["twoHanded"].type = JSON_TYPE.INTEGER;
+			json.object["twoHanded"].integer = TWOHANDED;
+
+
+			json.object["baseDmage"] = JSONValue();
+			json.object["baseDmage"].type = JSON_TYPE.UINTEGER;
+			json.object["baseDmage"].uinteger = BASE_DAMAGE;
+
+			json.object["precision"] = JSONValue();
+			json.object["precision"].type = JSON_TYPE.UINTEGER;
+			json.object["precision"].uinteger = PRECISION;
+
+			return json;
 		}
 }

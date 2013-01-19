@@ -25,6 +25,8 @@ class Player : Actor
 		float dexterity;
 		bool alive;
 
+	public:
+		char rep;
 	/**
 	 * Creates a new player
 	 * startHealth the starting health of the player
@@ -32,7 +34,7 @@ class Player : Actor
 	 * startMaxWeight how much weight a player can carry
 	 */
 	public this( int startHealth, int startMana, int startMaxWeight, int
-	startStrength )
+	startStrength, char repChar)
 	{
 		health = startHealth;
 		maxHealth = startHealth;
@@ -41,6 +43,7 @@ class Player : Actor
 		weight = startMaxWeight;
 		maxWeight = startMaxWeight;
 		strength = startStrength;
+		rep = repChar;
 
 		inventory = [];
 		slaves = [];

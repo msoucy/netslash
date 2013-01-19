@@ -23,7 +23,7 @@ class GameServer {
             srv.listen(10);
             debug { writefln("Entering loop"); }
             for(Socket c = srv.accept(); c.isAlive(); c = srv.accept()) {
-                debug { writefln("Waiting for connection..."); };
+                debug { writefln("Waiting for connection..."); }
                 if(currentUsers < maxcons) {
                     auto t = new UserThread(c);
                     t.start();
@@ -68,40 +68,46 @@ private:
             debug { writefln("Receiveing"); }
             n = cli.receive(buf);
             debug { writefln("Done receiving"); }
+            string s = "";
             while(cli.isAlive()) {
                 n = cli.receive(buf);
-                string s = to!string(buf[0..n]);
+                s = to!string(buf[0..n]);
                 s = strip(s);
                 debug { writefln("%s", s); }
-                cli.send("Ok\n");
+                if(s == GameServerCommands.UPDATE) {
+                    cli.send(GameServerCommands.UPDATE);
+                }
                 if(s == GameServerCommands.EXIT) {
+                    cli.send(GameServerCommands.EXIT);
+                    debug {writefln("Exiting");}
                     break;
                 }
+                else {
+                    cli.send(GameServerCommands.ERROR);
+                }
             }
-            cli.close();
             --currentUsers;
-            debug {
-                writef("Closed connection to ");
-                writefln(cli.remoteAddress().toAddrString());
-                writefln("Current Users: %d", currentUsers);
-            }
+            writef("Closed connection to ");
+            writefln(cli.remoteAddress().toAddrString());
+            writefln("Current Users: %d", currentUsers);
+            cli.close();
             
         }
     }
 }
 
-// Sent from client
-class GameServerCommands {
-    const string EXIT = "exit";
-    const string UPDATE = "update";
-}
-
 // Sent from server
-class GameServerStatus {
-    const string UPDATE = "update";
+class GameServerCommands {
+public:
+    static string UPDATE = "update";
+    static string EXIT = "exit";
+    static string ERROR = "error";
 }
 
 int main() {
+    debug {
+        writefln("%s, %s, %s", GameServerCommands.UPDATE,GameServerCommands.EXIT, GameServerCommands.ERROR);
+    }
     writefln("Starting Gameserver");
     debug {
         writefln("***Debug Enabled***");

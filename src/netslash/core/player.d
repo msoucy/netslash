@@ -50,13 +50,13 @@ class Player : Actor
 				// slots. The damage should be the weapon base damage plus
 				// the player's strength attribute - 10 divided by two
 			{
-				return rightHandWeapon.getDamage() +  ( strength - 10 ) /2;
+				return rightHandWeapon.BASE_DAMAGE +  ( strength - 10 ) /2;
 			}else
 				// if two one-handed weapons are equiped the same is applied
 				// but the strength bonus is applied two times
 			{
-				return leftHandWeapon.getDamage() +
-				rightHandWeapon.getDamage() + ( (strength - 10) / 2 ) * 2;
+				return leftHandWeapon.BASE_DAMAGE +
+				rightHandWeapon.BASE_DAMAGE + ( (strength - 10) / 2 ) * 2;
 			}
 		}
 

@@ -29,4 +29,6 @@ abstract class Actor
 
 		// Move to the specified location on the board
 		void teleport( int x, int y );
+
+		void applyDamage( ulong damage );
 }

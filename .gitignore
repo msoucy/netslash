@@ -17,3 +17,6 @@ bin
 *.sublime-*
 ./client
 ./server
+
+#vim swap files
+*.*.swp

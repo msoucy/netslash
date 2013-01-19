@@ -18,7 +18,7 @@ import netslash.core.player;
 class GameServer {
 
     enum Consts {
-        DEFAULT_PORT = 13373,
+        DEFAULT_PORT = 13374,
         DEFAULT_BUFSIZE = 1024,
         DEFAULT_MAXCONNECTIONS = 8
     }
@@ -37,7 +37,11 @@ class GameServer {
             b = genTestMap();
             maxUsers = maxcons;
             currentUsers = 0;
+            players = new Player[maxcons];
             cons = new Socket[maxcons];
+            for(int i = 0; i < maxcons; ++i) {
+                players[i] = null;
+            }
             auto srv = new TcpSocket;
             srv.bind(new InternetAddress(port));
             srv.listen(10);
@@ -65,6 +69,7 @@ private:
     synchronized {
         int currentUsers;
         Board b;
+        Player[] players;
     }
     class UserThread : Thread {
         
@@ -91,6 +96,8 @@ private:
 
             string s = "";
             Player p = new Player(10,10,10,10, 'X');
+            players[currentUsers-1] = p;
+            int index = currentUsers-1;
             bool err = b.board[b.startRow][b.startCol].putActor(p);
             debug {(err) ? writefln("Placed at home") : writefln("Error placing");}
             cli.send(b.serialize());
@@ -102,9 +109,26 @@ private:
                 s = to!string(buf[0..n]);
                 s = strip(s);
                 debug { writefln("From %s: %s", cli.remoteAddress().toAddrString(), s); }
-                if(s == GameServerCommands.UPDATE) {
+                if(s.indexOf(GameServerCommands.UPDATE) > -1) {
                     cli.send(b.serialize());
-                    //TODO send player positions
+                    auto json = JSONValue();
+                    json.type = JSON_TYPE.ARRAY;
+                    for(int i = 0; i < players.length; ++i) {
+                        if(!(players[i] is null)) {
+                            debug { writefln("Adding player: %d", i); }
+                            string str = players[i].serialize();
+                            debug { writefln("Serialized player: %s", str); }
+                            writef("a\n");
+                            json.array ~= parseJSON(str);
+                            debug{ writefln("Bottom of loop"); }
+                        }
+                        else {
+                            debug{ writefln("Player is null");}
+                        }
+                    }
+                    debug{ writefln("Done serializing"); }
+                    writefln(toJSON(&json));
+                    cli.send(toJSON(&json));
                 }
                 else if(s == GameServerCommands.EXIT || s == "\n") {
                     cli.send(GameServerCommands.EXIT);
@@ -114,6 +138,7 @@ private:
                 else {
                     cli.send(GameServerCommands.ERROR);
                 }
+                writefln("done");
             }
             --currentUsers;
             writef("Closed connection to ");

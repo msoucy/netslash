@@ -12,10 +12,13 @@ private:
 public:
     this(ushort port = Consts.DEFAULT_PORT, int bufsize = Consts.DEFAULT_BUFSIZE) {
         debug { writefln("Starting client_server\nArgs:\n\tPort: %d\n\tBuffer Size: %d", port, bufsize); }
-        skt = new TcpSocket(new InternetAddress(InternetAddress.parse("hanesmba.student.rit.edu"), Consts.DEFAULT_PORT));
+        writefln(getAddress("hanesmba.student.rit.edu", 13373)[0].toAddrString());
+        debug{writefln("Connecting to %s", addr[0]);}
+        skt = new TcpSocket;
         skt.blocking(true);
-        skt.connect(getAddress("hanesmba.student.rit.edu", 13373)[0]);
-        //writefln(getAddress("hanesmba.student.rit.edu", 13373)[0].toAddrString());
+        //skt.bind(new InternetAddress(InternetAddress.parse("hanesmba.student.rit.edu")[0], Consts.DEFAULT_PORT));
+        Socket sock = new TcpSocket(new InternetAddress("hanesmba.student.rit.edu", Consts.DEFAULT_PORT));
+        
         debug { writefln("Entering client loop"); }
     }
 
@@ -30,6 +33,7 @@ public:
     }
 
     void close() {
+        this.write("exit");
         skt.close();
     }
 }

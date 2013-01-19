@@ -5,6 +5,7 @@ import std.random;
 import netslash.core.actor;
 import netslash.core.item;
 import netslash.core.weapon;
+import netslash.core.unarmed;
 
 class Player : Actor
 {

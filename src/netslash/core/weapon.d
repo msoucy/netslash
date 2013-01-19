@@ -10,20 +10,14 @@ import netslash.core.actor;
 abstract class Weapon : Item
 {
 	public:
-		const uint base_damage() @property {return 0;}
-		const uint weight() @property {return 0;}
-		const uint precision() @property {return 0;}
+		const bool TWOHANDED;
+		const uint BASE_DAMAGE;
+		const uint PRECISION;
 
-	private:
-		// if this weapon is two handed then this should be true otherwise
-		// this should be false
-		bool twoHanded;
-
-	public:
-		const bool getTwoHanded()
-		{
-			return twoHanded;
+		this(string name, string help, uint weight, char rep, bool twohanded=false, uint baseDamage=0, uint precision=0) {
+			super(name, help, weight, rep);
+			TWOHANDED=twohanded;
+			BASE_DAMAGE=baseDamage;
+			PRECISION=precision;
 		}
-
-		const char getCharacter() {return '/';}
 }

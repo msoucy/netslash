@@ -1,11 +1,17 @@
 module netslash.core.item;
 
-interface Item
+abstract class Item
 {
 	public:
-		char getCharacter();
+		this(string name = "Perfectly generic object", string help = "A perfectly generic object", uint weight = 0, char rep =' ') {
+			NAME=name;
+			HELP_MESSAGE=help;
+			WEIGHT=weight;
+			REP=rep;
+		}
 
-		string getName();
-		string getHelp();
-		uint weight();
+		const string NAME;
+		const string HELP_MESSAGE;
+		const uint WEIGHT;
+		const char REP;
 }

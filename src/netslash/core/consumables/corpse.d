@@ -4,11 +4,11 @@ import netslash.core.consumable;
 import netslash.core.actor;
 
 class Corpse : Consumable {
-	void consume(Actor a) {
-		//
+	this(string name, uint weight) {
+		super(name ~ " Corpse", "Drink the blood of your enemies!", weight, '%');
 	}
-	char getCharacter() @safe pure nothrow const {
-		return '%';
+	override void consume(Actor a) {
+		//
 	}
 
 }

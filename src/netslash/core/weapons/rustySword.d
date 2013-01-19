@@ -5,17 +5,13 @@ import netslash.core.weapon;
 class RustySword : Weapon
 {
 	public:
-		override const int base_damage() @property {return 0;}
+		override const uint base_damage() @property {return 0;}
 		override const uint weight() @property {return 10;}
-		override const int precision() @property {return 0;}
-		override const 
-
-	private:
-		bool twoHanded;
-
+		override const uint precision() @property {return 0;}
+		
 	public this ()
 	{
-		twoHanded = true;
+		Weapon.twoHanded = true;
 	}
 
 	public:
@@ -30,7 +26,7 @@ class RustySword : Weapon
 			return "A two handed sword with a rusing blade";
 		}
 
-		const char getCharacter()
+		override const char getCharacter()
 		{
 			return '/';
 		}

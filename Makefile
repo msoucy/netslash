@@ -21,7 +21,7 @@ GEN_PREFIX=$(SRC_PREFIX)/netslash/generator
 CORE_PREFIX=$(SRC_PREFIX)/netslash/core
 DNCURSES_PREFIX=$(SRC_PREFIX)/metus/dncurses
 
-CORE_FILES=${wildcard $(CORE_PREFIX)/*.d} ${wildcard $(DNCURSES_PREFIX)/*.d}
+CORE_FILES=${wildcard $(CORE_PREFIX)/*.d} ${wildcard $(CORE_PREFIX)/**/*.d} ${wildcard $(DNCURSES_PREFIX)/*.d}
 GEN_FILES=${wildcard $(GEN_PREFIX)/*.d} $(CORE_FILES)
 CLIENT_FILES=${wildcard $(CLIENT_PREFIX)/*.d} $(CORE_FILES)
 SERVER_FILES=${wildcard $(SERVER_PREFIX)/server.d} $(GEN_FILES)

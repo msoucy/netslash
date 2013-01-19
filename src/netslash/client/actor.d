@@ -1,0 +1,1 @@
+module netslash.client.actor;

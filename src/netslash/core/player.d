@@ -11,6 +11,7 @@ class Player : Actor
 {
 	private:
 		Item[] inventory;
+		Actor[] slaves; //TODO change this to type npc later
 		Weapon leftHandWeapon;
 		Weapon rightHandWeapon;
 		Armor currentArmor;
@@ -55,6 +56,11 @@ class Player : Actor
 			return damage;
 		}
 
+		auto rangedAttack()
+		{
+			//TODO generate a new actor to place in the world
+		}
+
 		/*
 		 * Calculates damage based off of the current equiped weapon
 		 */
@@ -96,7 +102,7 @@ class Player : Actor
 		 */
 		real calculateHitChance( Weapon w )
 		{
-			return ( dexterity + w.getPrecision ) / 2;
+			return ( dexterity + w.PRECISION ) / 2;
 		}
 
 	public:
@@ -106,7 +112,7 @@ class Player : Actor
 		 **/
 		void applyDamage( ulong damage )
 		{
-			health -= damage;
+			health -= damage - currentArmor.DAMAGE_ABSORBED;
 
 			if( health <= 0 )
 			{

@@ -1,5 +1,7 @@
 module netslash.core.actor;
 
+import netslash.core.consumable;
+
 /*
 * Interface for Actors
 */
@@ -31,4 +33,8 @@ abstract class Actor
 		void teleport( int x, int y );
 
 		void applyDamage( ulong damage );
+
+		void consume(Consumable c) {
+			c.consume(this);
+		}
 }

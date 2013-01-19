@@ -8,6 +8,8 @@ import netslash.core.board;
 import netslash.core.player;
 import netslash.core.actor;
 
+import metus.dncurses.dncurses;
+
 class ClientServer {
 private:
 	Socket skt;
@@ -51,20 +53,75 @@ public:
 	}
 }
 
+string getline(ClientServer serv) {
+	string str;
+	do {
+		str=serv.get();
+	} while(str.length == 0);
+	return str;
+}
+
 void main() {
+	//ClientServer s = new ClientServer("hanesmba.student.rit.edu");
 	ClientServer s = new ClientServer("127.0.0.1");
 	scope(exit) s.close();
 
+	initscr();
+	scope(exit) endwin();
+	initColor();
+
+	stdwin.keypad = true;
+	mode=Raw();
+	stdwin.timeout = 50;
+	echo(false);
+	scope(exit) echo(true);
+
 	string str;
-	do {
+	str = s.getline();
+	Board board = Board.deserialize(str);
+	stdwin.put(board.print());
+	str = s.getline();
+	Player player = Player.deserialize(str);
+	stdwin.getch();
+
+	while(1) {
+		auto ch = stdwin.getch();
+		switch(ch) {
+			case 'h': {
+				player.x--;
+				s.write(player.serialize());
+				break;
+			}
+			case 'l': {
+				player.x++;
+				s.write(player.serialize());
+				break;
+			}
+			case 'j': {
+				player.y++;
+				s.write(player.serialize());
+				break;
+			}
+			case 'k': {
+				player.y--;
+				s.write(player.serialize());
+				break;
+			}
+			case 'q': {
+				return;
+			}
+			default: {
+				break;
+			}
+		}
 		str=s.get();
-	} while(str.length == 0);
-	Board b = Board.deserialize(str);
-	do {
-		str=s.get();
-	} while(str.length == 0);
-	str.writeln();
-	Player p = Player.deserialize(str);
-	return;
+		if(str != "") {
+			board = Board.deserialize(str);
+			str=s.get();
+			if(str != "") {
+				player = Player.deserialize(str);
+			}
+		}
+	}
 
 }

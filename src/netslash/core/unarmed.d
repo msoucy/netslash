@@ -7,7 +7,7 @@ class Unarmed : Weapon
 	private:
 	public:
 
-	override const int BASE_DAMAGE() @property {
+	override const uint base_damage() @property {
 		return 0;
 	}
 

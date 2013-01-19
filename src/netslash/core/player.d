@@ -95,14 +95,14 @@ class Player : Actor
 				// slots. The damage should be the weapon base damage plus
 				// the player's strength attribute - 10 divided by two
 			{
-				return rightHandWeapon.BASE_DAMAGE +  ( strength - 10 ) /2;
+				return rightHandWeapon.base_damage +  ( strength - 10 ) /2;
 			}
 			else
 				// if two one-handed weapons are equiped the same is applied
 				// but the strength bonus is applied two times
 			{
-				return leftHandWeapon.BASE_DAMAGE +
-				rightHandWeapon.BASE_DAMAGE + ( (strength - 10) / 2 ) * 2;
+				return leftHandWeapon.base_damage +
+				rightHandWeapon.base_damage + ( (strength - 10) / 2 ) * 2;
 			}
 		}
 
@@ -115,7 +115,7 @@ class Player : Actor
 		 */
 		real calculateHitChance( Weapon w )
 		{
-			return ( dexterity + w.PRECISION ) / 2;
+			return ( dexterity + w.precision ) / 2;
 		}
 
 	public:

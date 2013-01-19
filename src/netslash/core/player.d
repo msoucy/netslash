@@ -104,14 +104,14 @@ class Player : Actor
 				// slots. The damage should be the weapon base damage plus
 				// the player's strength attribute - 10 divided by two
 			{
-				return rightHandWeapon.base_damage +  ( strength - 10 ) /2;
+				return rightHandWeapon.BASE_DAMAGE +  ( strength - 10 ) /2;
 			}
 			else
 				// if two one-handed weapons are equiped the same is applied
 				// but the strength bonus is applied two times
 			{
-				return leftHandWeapon.base_damage +
-				rightHandWeapon.base_damage + ( (strength - 10) / 2 ) * 2;
+				return leftHandWeapon.BASE_DAMAGE +
+				rightHandWeapon.BASE_DAMAGE + ( (strength - 10) / 2 ) * 2;
 			}
 		}
 
@@ -124,7 +124,7 @@ class Player : Actor
 		 */
 		real calculateHitChance( Weapon w )
 		{
-			return ( dexterity + w.precision ) / 2;
+			return ( dexterity + w.PRECISION ) / 2;
 		}
 
 	public:
@@ -134,7 +134,7 @@ class Player : Actor
 		 **/
 		override void applyDamage( ulong damage )
 		{
-			health -= damage - currentArmor.damage_absorbed;
+			health -= damage - currentArmor.DAMAGE;
 
 			if( health <= 0 )
 			{
@@ -230,7 +230,7 @@ class Player : Actor
 			json.object["manaRegenFactor"].floating;
 
 			p.dexterity = json.object["dexterity"].floating;
-			p.alive = json.object["alive"].integer;
+			p.alive = json.object["alive"].integer != 0;
 
 			return p;
 		}

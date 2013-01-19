@@ -13,9 +13,23 @@ class Player : Actor
 		Weapon leftHandWeapon;
 		Weapon rightHandWeapon;
 		Armor currentArmor;
-		int health, mana, maxWeight, strength;
+		int health, maxHealth,  mana, maxMana, weight,  maxWeight, strength;
 		float dexterity;
+		bool alive;
 
+	public this( int startHealth, int startMana, int startMaxWeight, int
+	startStrength )
+	{
+		health = startHealth;
+		maxHealth = startHealth;
+		mana = startMana;
+		maxMana = startMana;
+		weight = startMaxWeight;
+		maxWeight = startMaxWeight;
+		strength = startStrength;
+
+		inventory = [];
+	}
 	private:
 		/*
 		 * Attacks the specified actor. Generats a roll which is used to
@@ -45,13 +59,25 @@ class Player : Actor
 		 */
 		int calculateDamage()
 		{
+			// if a hand is unarmed (null) create new unarmed
+			if( leftHandWeapon == null )
+			{
+				leftHandWeapon = new Unarmed();
+			}
+
+			if( rightHandWeapon == null )
+			{
+				rightHandWeapon == new Unarmed();
+			}
+
 			if( leftHandWeapon is rightHandWeapon )
 				// if the weapon is one handed it will be the same in both
 				// slots. The damage should be the weapon base damage plus
 				// the player's strength attribute - 10 divided by two
 			{
 				return rightHandWeapon.BASE_DAMAGE +  ( strength - 10 ) /2;
-			}else
+			}
+			else
 				// if two one-handed weapons are equiped the same is applied
 				// but the strength bonus is applied two times
 			{
@@ -72,6 +98,18 @@ class Player : Actor
 			return ( dexterity + w.getPrecision ) / 2;
 		}
 
+	public:
 
+		/**
+		 * Applies the specified damage
+		 **/
+		void applyDamage( ulong damage )
+		{
+			health -= damage;
 
+			if( health <= 0 )
+			{
+				alive = false;
+			}
+		}
 }

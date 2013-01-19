@@ -2,6 +2,10 @@ module netslash.core.player;
 
 import std.random;
 
+import netslash.core.actor;
+import netslash.core.item;
+import netslash.core.weapon;
+
 class Player : Actor
 {
 	private:
@@ -29,7 +33,7 @@ class Player : Actor
 			if( roll >= hit )
 			{
 				damage = calculateDamage();
-				a.applyDamage( damage )
+				a.applyDamage( damage );
 				return damage;
 			}
 

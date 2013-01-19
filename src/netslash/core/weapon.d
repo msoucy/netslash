@@ -1,4 +1,4 @@
-module netslash.core.item;
+module netslash.core.weapon;
 
 /*
  * Abstract class for a weapon

@@ -15,3 +15,5 @@
 # Build stuff
 bin
 *.sublime-*
+client
+server

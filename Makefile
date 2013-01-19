@@ -8,7 +8,7 @@ RELDIR=rel
 C_LIBS=-lncurses
 D_LIBS=${addprefix -L, $(C_LIBS)}
 # Flags needed for building
-BASE_FLAGS=-property $(D_LIBS)
+BASE_FLAGS=-property $(D_LIBS) -I"src"
 DEBUG_FLAGS=$(BASE_FLAGS) -wi -de -gs -debug
 RELEASE_FLAGS=$(BASE_FLAGS) -O -inline
 # The build command to use

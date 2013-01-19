@@ -213,24 +213,29 @@ class Player : Actor
 
 		static Player deserialize(string src) {
 			auto json = src.parseJSON();
+			writefln("AAA");
 			Player p = new Player(
+				
 				json.object["health"].integer.to!int(),
 				json.object["mana"].integer.to!int(),
 				json.object["maxWeight"].integer.to!int(),
 				json.object["strength"].integer.to!int(),
 				json.object["dexterity"].floating,
-				json.object["rep"].str.to!char(),
+				'X'
+				//json.object["rep"].str.to!char()
 			);
+			
 			p.maxHealth = json.object["maxHealth"].integer.to!int(),
 			p.maxMana = json.object["maxMana"].integer.to!int(),
 			p.x = json.object["x"].integer;
 			p.y = json.object["y"].integer;
+			p.healthRegenFactor = 1;
+			//json.object["healthRegenFactor"].floating;
+			writefln("BBBB");
+			p.manaRegenFactor = 1;
+			//json.object["manaRegenFactor"].floating;
 
-			p.healthRegenFactor =
-			json.object["healthRegenFactor"].floating;
-			p.manaRegenFactor =
-			json.object["manaRegenFactor"].floating;
-
+			writefln("AAA");
 			p.dexterity = json.object["dexterity"].floating;
 			p.alive = json.object["alive"].integer != 0;
 

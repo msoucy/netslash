@@ -11,7 +11,7 @@ import std.string;
 class GameServer {
 
     enum Consts {
-        DEFAULT_PORT = 13373,
+        DEFAULT_PORT = 13374,
         DEFAULT_BUFSIZE = 1024,
         DEFAULT_MAXCONNECTIONS = 8
     }
@@ -25,9 +25,11 @@ class GameServer {
     void startServer(ushort port = Consts.DEFAULT_PORT, int bufsize = Consts.DEFAULT_BUFSIZE, int maxcons = Consts.DEFAULT_MAXCONNECTIONS) {
         try {
             debug {
-                writefln("Starting server:\n\tArgs: Port: %d\n\tBuffer Size: %d\n\tMax Connections: %d", port, bufsize, maxcons);
+                writefln("Starting server\nArgs:\n\tPort: %d\n\tBuffer Size: %d\n\tMax Connections: %d", port, bufsize, maxcons);
             }
+            maxUsers = maxcons;
             currentUsers = 0;
+            cons = new Socket[maxcons];
             auto srv = new TcpSocket;
             srv.bind(new InternetAddress(port));
             srv.listen(10);
@@ -50,9 +52,11 @@ class GameServer {
         }
     }
 private:
-        synchronized {
-            int currentUsers;
-        }
+    int maxUsers;
+    Socket [] cons;
+    synchronized {
+        int currentUsers;
+    }
     class UserThread : Thread {
         
         this(Socket rem, int bufs = Consts.DEFAULT_BUFSIZE) {
@@ -75,19 +79,17 @@ private:
                 write("Connection from ");
                 writefln(cli.remoteAddress().toAddrString());
             }
-            debug { writefln("Receiveing"); }
             n = cli.receive(buf);
-            debug { writefln("Done receiving"); }
             string s = "";
             while(cli.isAlive()) {
                 n = cli.receive(buf);
                 s = to!string(buf[0..n]);
                 s = strip(s);
-                debug { writefln("%s", s); }
+                debug { writefln("From %s: %s", cli.remoteAddress().toAddrString(), s); }
                 if(s == GameServerCommands.UPDATE) {
                     cli.send(GameServerCommands.UPDATE);
                 }
-                if(s == GameServerCommands.EXIT) {
+                else if(s == GameServerCommands.EXIT) {
                     cli.send(GameServerCommands.EXIT);
                     debug {writefln("Exiting");}
                     break;
@@ -104,6 +106,7 @@ private:
             
         }
     }
+
 }
 
 // Sent from server

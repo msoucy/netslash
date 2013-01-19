@@ -1,4 +1,4 @@
-module netslash.client.item;
+module netslash.core.item;
 
 interface Item
 {

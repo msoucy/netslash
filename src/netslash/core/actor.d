@@ -1,4 +1,4 @@
-module netslash.client.actor;
+module netslash.core.actor;
 
 /*
 * Interface for Actors

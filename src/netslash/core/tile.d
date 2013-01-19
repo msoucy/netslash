@@ -1,6 +1,6 @@
-module netslash.client.tile;
+module netslash.core.tile;
 
-import netslash.client.actor;
+import netslash.core.actor;
 
 /*
 	Basic tile type
@@ -24,4 +24,21 @@ class Tile {
 	}
 
 	Actor actor;
+}
+
+class Wall : Tile {
+	// Can we pass through the tile?
+	override bool passable() @property @safe nothrow const
+	{
+		return false;
+	}
+	// How does it look on the map
+	char rep() @property @safe nothrow const
+	{
+		return '#';
+	}
+	// What is displayed when help command is used
+	string help() @property @safe nothrow const {
+		return "# : A wall";
+	}
 }

@@ -1,4 +1,4 @@
-module netslash.client.player;
+module netslash.core.player;
 
 import std.random;
 

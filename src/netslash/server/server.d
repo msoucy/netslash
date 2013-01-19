@@ -3,6 +3,7 @@ import std.socket;
 import core.thread;
 import std.conv;
 import std.string;
+import std.json;
 
 /**
 * GameServer for netslash
@@ -85,6 +86,7 @@ private:
                 n = cli.receive(buf);
                 s = to!string(buf[0..n]);
                 s = strip(s);
+                
                 debug { writefln("From %s: %s", cli.remoteAddress().toAddrString(), s); }
                 if(s == GameServerCommands.UPDATE) {
                     cli.send(GameServerCommands.UPDATE);

@@ -49,7 +49,7 @@ class Player : Actor
 		weight = 0;
 		maxWeight = startMaxWeight;
 		strength = startStrength;
-		dexterity = startDex;
+		dexterity = 10f;
 		rep = repChar;
 
 		inventory = [];
@@ -198,7 +198,7 @@ class Player : Actor
 			json.object["strength"].integer = strength;
 			json.object["dexterity"] = JSONValue();
 			json.object["dexterity"].type = JSON_TYPE.FLOAT;
-			json.object["dexterity"].floating = dexterity;
+			json.object["dexterity"].floating = 10;
 			json.object["alive"] = JSONValue();
 			json.object["alive"].type = JSON_TYPE.INTEGER;
 			json.object["alive"].integer = alive;
@@ -220,7 +220,8 @@ class Player : Actor
 				json.object["mana"].integer.to!int(),
 				json.object["maxWeight"].integer.to!int(),
 				json.object["strength"].integer.to!int(),
-				json.object["dexterity"].floating,
+				//json.object["dexterity"].floating,
+				10f,
 				'X'
 				//json.object["rep"].str.to!char()
 			);

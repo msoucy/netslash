@@ -23,6 +23,6 @@ Board genTestMap() {
 }
 
 int main(char[][] argv) {
-    genTestMap().print();
+    genTestMap().print(stdout);
     return 1;
 }

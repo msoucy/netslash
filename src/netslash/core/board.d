@@ -34,12 +34,12 @@ class Board {
 		return toJSON(&b);
 	}
 
-	void print() {
+	void print(File f) {
 		for(int i = 0; i < board.length; ++i) {
 			for(int n = 0; n < board[i].length; ++n) {
-				writef("%s", board[i][n].rep());
+				f.writef("%s", board[i][n].rep());
 			}
-			writefln("");
+			f.writefln("");
 		}
 	}
 }

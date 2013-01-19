@@ -86,8 +86,10 @@ private:
                 write("Connection from ");
                 writefln(cli.remoteAddress().toAddrString());
             }
-            n = cli.receive(buf);
+
             string s = "";
+            cli.send(b.print());
+            writefln(b.print());
             while(cli.isAlive()) {
                 n = cli.receive(buf);
                 s = to!string(buf[0..n]);

@@ -4,6 +4,10 @@ import core.thread;
 import std.conv;
 import std.string;
 
+/**
+* GameServer for netslash
+* @author Andrew Hanes
+*/
 class GameServer {
 
     enum Consts {
@@ -11,7 +15,13 @@ class GameServer {
         DEFAULT_BUFSIZE = 1024,
         DEFAULT_MAXCONNECTIONS = 8
     }
-
+    /**
+    * Call to start the server
+    * Default args are in the GameServer.Consts enum
+    * @param port the prot
+    * @param bufsize The buf size 
+    * @param maxcons The max connections
+    */
     void startServer(ushort port = Consts.DEFAULT_PORT, int bufsize = Consts.DEFAULT_BUFSIZE, int maxcons = Consts.DEFAULT_MAXCONNECTIONS) {
         try {
             debug {
@@ -56,11 +66,11 @@ private:
         Socket cli;
         int bufsize;
         void run(){
+            cli.setOption(SocketOptionLevel.SOCKET, SocketOption.RCVLOWAT, 1);
             ++currentUsers;
             debug { writefln("Running thread..."); }
             char[] buf = new char[bufsize];
             long n;
-            // n = cli.receive(buf);
             debug { 
                 write("Connection from ");
                 writefln(cli.remoteAddress().toAddrString());

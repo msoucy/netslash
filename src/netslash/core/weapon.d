@@ -1,9 +1,11 @@
 module netslash.core.weapon;
 
+import netslash.core.item;
+
 /*
  * Abstract class for a weapon
  */
-abstract class Weapon : Item
+abstract class Weapon : item
 {
 	public:
 		const int BASE_DAMAGE;

@@ -3,6 +3,7 @@ module netslash.core.board;
 import std.json;
 import std.algorithm;
 import std.array;
+import std.stdio;
 
 import netslash.core.tile;
 
@@ -31,5 +32,14 @@ class Board {
 		}
 		b.object["board"].str = appr.data.idup;
 		return toJSON(&b);
+	}
+
+	void print() {
+		for(int i = 0; i < board.length; ++i) {
+			for(int n = 0; n < board[i].length; ++n) {
+				writef("%s", board[i][n].rep());
+			}
+			writefln("");
+		}
 	}
 }

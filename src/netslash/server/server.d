@@ -1,9 +1,13 @@
+module netslask.server.server;
+
 import std.stdio;
 import std.socket;
 import core.thread;
 import std.conv;
 import std.string;
 import std.json;
+import netslash.generator.mapgen : genTestMap;
+import netslash.core.board;
 
 /**
 * GameServer for netslash
@@ -28,6 +32,7 @@ class GameServer {
             debug {
                 writefln("Starting server\nArgs:\n\tPort: %d\n\tBuffer Size: %d\n\tMax Connections: %d", port, bufsize, maxcons);
             }
+            //b = genTestMap();
             maxUsers = maxcons;
             currentUsers = 0;
             cons = new Socket[maxcons];
@@ -57,6 +62,7 @@ private:
     Socket [] cons;
     synchronized {
         int currentUsers;
+        Board b;
     }
     class UserThread : Thread {
         

@@ -78,12 +78,14 @@ private:
                     break;
                 }
             }
-            debug {
-                writef("Closing connecting to ");
-                writefln(cli.remoteAddress().toAddrString());
-            }
             cli.close();
             --currentUsers;
+            debug {
+                writef("Closed connection to ");
+                writefln(cli.remoteAddress().toAddrString());
+                writefln("Current Users: %d", currentUsers);
+            }
+            
         }
     }
 }

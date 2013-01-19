@@ -95,7 +95,7 @@ private:
             }
 
             string s = "";
-            Player p = new Player(10,10,10,10, 'X');
+            Player p = new Player(10,10,10,10,10, 'X');
             players[currentUsers-1] = p;
             int index = currentUsers-1;
             bool err = b.board[b.startRow][b.startCol].putActor(p);

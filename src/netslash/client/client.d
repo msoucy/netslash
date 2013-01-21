@@ -88,22 +88,22 @@ void main() {
 		auto ch = stdwin.getch();
 		switch(ch) {
 			case 'h': {
-				player.x--;
+				player.y--;
 				s.write(player.serialize());
 				break;
 			}
 			case 'l': {
-				player.x++;
-				s.write(player.serialize());
-				break;
-			}
-			case 'j': {
 				player.y++;
 				s.write(player.serialize());
 				break;
 			}
+			case 'j': {
+				player.x++;
+				s.write(player.serialize());
+				break;
+			}
 			case 'k': {
-				player.y--;
+				player.x--;
 				s.write(player.serialize());
 				break;
 			}
